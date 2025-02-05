@@ -9,10 +9,8 @@ workflows:
       groups:
         - firebase_credentials
       ios_signing:
-        provisioning_profiles:
-          - profile: XC Wildcard
-        certificates:
-          - certificate: MiBCity
+        distribution_type: app_store
+        bundle_identifier: io.codemagic.sample.iosnative
       vars:
         BUNDLE_ID: "io.codemagic.sample.iosnative"
         XCODE_WORKSPACE: "Runner.xcworkspace"
