@@ -20,10 +20,10 @@ workflows:
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
-      - name: Increment build number
-        script: | 
-            --build-name=1.0.$BUILD_NUMBER \
-            --build-number=$BUILD_NUMBER
+      #- name: Increment build number
+      #  script: | 
+      #      --build-name=1.0.$BUILD_NUMBER \
+      #      --build-number=$BUILD_NUMBER
       - name: Build ipa for distribution
         script: | 
           xcode-project build-ipa \
