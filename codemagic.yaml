@@ -10,7 +10,7 @@ workflows:
         - firebase_credentials
       ios_signing:
         provisioning_profiles:
-          - profile: XC Wildcard
+          - profile: CityFlutterTest
         certificates:
           - certificate: MiBCity
       vars:
