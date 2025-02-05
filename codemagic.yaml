@@ -7,6 +7,7 @@ workflows:
     #  app_store_connect: codemagic
     environment:
       groups:
+        - manual_code_signing
         - firebase_credentials
       ios_signing:
         provisioning_profiles:
@@ -32,10 +33,12 @@ workflows:
       #    LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
       #    agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
       - name: Build ipa for distribution
-        script: | 
-          xcode-project build-ipa \
-            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME"
+        script: |
+          xcode-project build-ipa --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
+      #  script: | 
+      #    xcode-project build-ipa \
+      #      --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+      #      --scheme "$XCODE_SCHEME"
       - name: Publish to Firebase Hosting
         script: | 
           firebase deploy --token "$FIREBASE_TOKEN"
