@@ -6,6 +6,8 @@ workflows:
     #integrations:
     #  app_store_connect: codemagic
     environment:
+      groups:
+        -firebase_credentials
       ios_signing:
         provisioning_profiles:
           - profile: XC Wildcard
@@ -18,6 +20,9 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
+      - name: Write Google credentials
+        script: | 
+          echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
       #- name: Increment build number
@@ -27,8 +32,15 @@ workflows:
       - name: Build ipa for distribution
         script: | 
           xcode-project build-ipa \
-            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --project "$XCODE_PROJECT" \
             --scheme "$XCODE_SCHEME"
+       # script: | 
+       #   xcode-project build-ipa \
+       #     --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+       #     --scheme "$XCODE_SCHEME"
+      - name: Publish to Firebase Hosting
+        script: | 
+          firebase deploy --token "$FIREBASE_TOKEN"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
