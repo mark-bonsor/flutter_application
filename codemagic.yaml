@@ -5,9 +5,9 @@ workflows:
     instance_type: mac_mini_m2
     #integrations:
     #  app_store_connect: codemagic
-    environment:
+    #environment:
       groups:
-        -group: firebase_credentials
+        - group: firebase_credentials
       ios_signing:
         provisioning_profiles:
           - profile: XC Wildcard
