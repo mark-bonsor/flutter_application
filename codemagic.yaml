@@ -4,11 +4,9 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
     integrations:
-      app_store_connect: codemagic
+      #app_store_connect: codemagic
     environment:
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: io.codemagic.sample.iosnative
         provisioning_profiles:
           - profile: XC Wildcard
         certificates:
