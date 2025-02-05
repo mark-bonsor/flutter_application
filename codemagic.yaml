@@ -7,7 +7,6 @@ workflows:
     #  app_store_connect: codemagic
     environment:
       groups:
-        - manual_code_signing
         - firebase_credentials
       ios_signing:
         provisioning_profiles:
