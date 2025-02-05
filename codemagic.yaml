@@ -15,7 +15,8 @@ workflows:
           - certificate: MiBCity
       vars:
         BUNDLE_ID: "io.codemagic.sample.runner"
-        XCODE_WORKSPACE: "Runner.xcworkspace"
+        #XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_WORKSPACE: "Runner.xcodeproj"
         XCODE_SCHEME: "Runner"
       xcode: latest
       cocoapods: default
