@@ -7,7 +7,7 @@ workflows:
     #  app_store_connect: codemagic
     environment:
       groups:
-        - group: firebase_credentials
+        - firebase_credentials
       ios_signing:
         provisioning_profiles:
           - profile: XC Wildcard
