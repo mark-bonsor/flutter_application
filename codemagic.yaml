@@ -38,6 +38,7 @@ workflows:
           firebase deploy --token "$FIREBASE_TOKEN"
     artifacts:
       - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     publishing:
       email:
