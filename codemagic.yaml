@@ -21,6 +21,9 @@ workflows:
       - name: Write Google credentials
         script: | 
           echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+      - name: Install CocoaPods dependencies
+        script: |
+          pod install
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
       - name: Increment build number
