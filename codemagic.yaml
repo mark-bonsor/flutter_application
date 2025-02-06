@@ -11,12 +11,7 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: MiB-Flutter-CodeMagic
-        #provisioning_profiles:
-        #  - profile: CityFlutterTest
-        #certificates:
-        #  - certificate: MiBCity
       vars:
-        #BUNDLE_ID: "uk.co.city-holdings.Flutter"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
         APP_STORE_APPLE_ID: 6741551558
@@ -29,7 +24,7 @@ workflows:
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
       - name: Increment build number
-      script: |
+        script: |
             # agvtool new-version -all $(($BUILD_NUMBER + 1))
             agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID") + 1))
       - name: Build ipa for distribution
