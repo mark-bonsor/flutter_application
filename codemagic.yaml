@@ -3,21 +3,23 @@ workflows:
     name: iOS Native workflow
     max_build_duration: 120
     instance_type: mac_mini_m2
-    #integrations:
-    #  app_store_connect: codemagic
+    integrations:
+      app_store_connect: MiBAppStoreConnectAPI
     environment:
       groups:
         - firebase_credentials
       ios_signing:
-        provisioning_profiles:
-          - profile: CityFlutterTest
-        certificates:
-          - certificate: MiBCity
+        distribution_type: app_store
+        bundle_identifier: MiB-Flutter-CodeMagic
+        #provisioning_profiles:
+        #  - profile: CityFlutterTest
+        #certificates:
+        #  - certificate: MiBCity
       vars:
-        BUNDLE_ID: "uk.co.city-holdings.Flutter"
+        #BUNDLE_ID: "uk.co.city-holdings.Flutter"
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
-        #APP_STORE_APPLE_ID: 1555555551
+        APP_STORE_APPLE_ID: 6741551558
       xcode: latest
       cocoapods: default
     scripts:
@@ -26,18 +28,15 @@ workflows:
           echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
-      #- name: Increment build number
-      #  script: | 
-      #    cd $CM_BUILD_DIR
-      #    LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
-      #    agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
+      - name: Increment build number
+      script: |
+            # agvtool new-version -all $(($BUILD_NUMBER + 1))
+            agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID") + 1))
       - name: Build ipa for distribution
-        script: |
-          xcode-project build-ipa --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
-      #  script: | 
-      #    xcode-project build-ipa \
-      #      --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
-      #      --scheme "$XCODE_SCHEME"
+        script: | 
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
       - name: Publish to Firebase Hosting
         script: | 
           firebase deploy --token "$FIREBASE_TOKEN"
